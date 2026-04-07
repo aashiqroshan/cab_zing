@@ -15,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool loading = false;
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -146,14 +147,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         /// Password
                         TextField(
                           controller: passwordController,
-                          obscureText: true,
+                          obscureText: _isPasswordVisible,
                           style: TextStyle(
                             color: isDark ? Colors.white : Colors.black,
                           ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.key, color: Colors.blue),
                             suffixIcon: Icon(
-                              Icons.visibility,
+                              _isPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
                               color: Colors.blue,
                             ),
                             hintText: "Password",

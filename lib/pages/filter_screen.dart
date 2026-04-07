@@ -4,7 +4,7 @@ class FiltersScreen extends StatefulWidget {
   const FiltersScreen({super.key});
 
   @override
- State<FiltersScreen> createState() => _FiltersScreenState();
+  State<FiltersScreen> createState() => _FiltersScreenState();
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
@@ -51,7 +51,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
             onPressed: () {},
             icon: const Icon(Icons.remove_red_eye, color: Colors.blue),
             label: const Text("Filter", style: TextStyle(color: Colors.blue)),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -59,11 +59,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// 🔽 This Month Dropdown
             Center(
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: cardColor,
                   borderRadius: BorderRadius.circular(20),
@@ -80,7 +81,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
             const SizedBox(height: 20),
 
-            /// 📅 Date Pickers
             Row(
               children: [
                 Expanded(child: _dateBox(isDark, fromDate, true)),
@@ -94,7 +94,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
             const SizedBox(height: 20),
 
-            /// 🔘 Status Buttons
             Row(
               children: [
                 _statusButton("Pending", isDark),
@@ -107,7 +106,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
             const SizedBox(height: 20),
 
-            /// 👤 Customer Dropdown
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               height: 50,
@@ -115,15 +113,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 color: cardColor,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                    color: isDark ? Colors.grey.shade800 : Colors.grey),
+                  color: isDark ? Colors.grey.shade800 : Colors.grey,
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Customer",
-                    style: TextStyle(color: textColor),
-                  ),
+                  Text("Customer", style: TextStyle(color: textColor)),
                   const Icon(Icons.keyboard_arrow_down),
                 ],
               ),
@@ -134,8 +130,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
             /// 🏷 Selected Customer Chip
             if (selectedCustomer != null)
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: cardColor,
                   borderRadius: BorderRadius.circular(20),
@@ -143,8 +141,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(selectedCustomer!,
-                        style: TextStyle(color: textColor)),
+                    Text(selectedCustomer!, style: TextStyle(color: textColor)),
                     const SizedBox(width: 8),
                     GestureDetector(
                       onTap: () {
@@ -153,20 +150,18 @@ class _FiltersScreenState extends State<FiltersScreen> {
                         });
                       },
                       child: const Icon(Icons.close, size: 16),
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
           ],
         ),
       ),
     );
   }
 
-  /// 📅 Date Box Widget
   Widget _dateBox(bool isDark, DateTime? date, bool isFrom) {
-    final cardColor =
-        isDark ? const Color(0xFF0F1A24) : Colors.grey.shade200;
+    final cardColor = isDark ? const Color(0xFF0F1A24) : Colors.grey.shade200;
 
     return GestureDetector(
       onTap: () => _pickDate(isFrom),
@@ -192,7 +187,6 @@ class _FiltersScreenState extends State<FiltersScreen> {
     );
   }
 
-  /// 🔘 Status Button Widget
   Widget _statusButton(String title, bool isDark) {
     final isSelected = selectedStatus == title;
 
@@ -208,15 +202,13 @@ class _FiltersScreenState extends State<FiltersScreen> {
           color: isSelected
               ? Colors.blue
               : isDark
-                  ? const Color(0xFF1E2A33)
-                  : Colors.grey.shade300,
+              ? const Color(0xFF1E2A33)
+              : Colors.grey.shade300,
           borderRadius: BorderRadius.circular(25),
         ),
         child: Text(
           title,
-          style: TextStyle(
-            color: isSelected ? Colors.white : null,
-          ),
+          style: TextStyle(color: isSelected ? Colors.white : null),
         ),
       ),
     );

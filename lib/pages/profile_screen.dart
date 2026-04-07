@@ -116,17 +116,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Expanded(
                         child: _statCard(
-                          isDark,
-                          title: "Bookings",
-                          value: "123",
+                          isDark: isDark,
+                          icon: Icons.star,
+                          title: "4.3",
+                          subtitle: "2211 rides",
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: _statCard(
-                          isDark,
-                          title: "Invoices",
-                          value: "10,232",
+                          isDark: isDark,
+                          icon: Icons.verified_user,
+                          title: "KYC",
+                          subtitle: "Verified",
                         ),
                       ),
                     ],
@@ -134,7 +136,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   const SizedBox(height: 20),
 
-                  /// 🔘 BUTTON
                   InkWell(
                     onTap: () {
                       storage.clear();
@@ -148,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Colors.black,
+                        color: isDark ? Colors.black : Colors.white,
                       ),
                       child: const Center(
                         child: Text(
@@ -190,31 +191,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  /// 🔹 STAT CARD
-  Widget _statCard(
-    bool isDark, {
+  Widget _statCard({
+    required bool isDark,
+    required IconData icon,
     required String title,
-    required String value,
+    required String subtitle,
   }) {
+    final bgColor = isDark ? Colors.black : Colors.white;
+
     return Container(
-      height: 100,
+      height: 90,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
+        color: bgColor,
         borderRadius: BorderRadius.circular(20),
-        color: isDark ? Colors.black.withOpacity(0.6) : Colors.white,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Row(
         children: [
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : Colors.black,
+          Container(
+            width: 40,
+            height: 60,
+            decoration: BoxDecoration(
+              color: isDark
+                  ? const Color(0xFF1C2A35)
+                  : Colors.blue.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Icon(
+              icon,
+              color: isDark ? Colors.lightBlueAccent : Colors.blue,
+              size: 20,
             ),
           ),
-          const SizedBox(height: 5),
-          Text(title, style: const TextStyle(color: Colors.grey)),
+
+          const SizedBox(width: 12),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.star, color: Colors.orange, size: 16),
+                ],
+              ),
+
+              const SizedBox(height: 4),
+
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDark ? Colors.white70 : Colors.black54,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

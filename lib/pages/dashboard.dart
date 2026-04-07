@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -91,23 +92,108 @@ class _DashboardState extends State<Dashboard> {
 
                       const SizedBox(height: 20),
 
-                      /// Fake Graph (UI only)
-                      Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.blue.withOpacity(0.5),
-                              Colors.transparent,
+                      SizedBox(
+                        height: 180,
+                        child: LineChart(
+                          LineChartData(
+                            gridData: FlGridData(
+                              show: true,
+                              drawVerticalLine: false,
+                              horizontalInterval: 1000,
+                              getDrawingHorizontalLine: (value) {
+                                return FlLine(
+                                  color: Colors.white12,
+                                  strokeWidth: 1,
+                                );
+                              },
+                            ),
+                            titlesData: FlTitlesData(
+                              leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  interval: 1000,
+                                  getTitlesWidget: (value, meta) {
+                                    return Text(
+                                      '${(value ~/ 1000)}K',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 10,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              rightTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              topTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                            ),
+                            borderData: FlBorderData(show: false),
+                            lineBarsData: [
+                              LineChartBarData(
+                                isCurved: true,
+                                spots: const [
+                                  FlSpot(0, 500),
+                                  FlSpot(1, 2500),
+                                  FlSpot(2, 2200),
+                                  FlSpot(3, 3800),
+                                  FlSpot(4, 2600),
+                                  FlSpot(5, 3200),
+                                  FlSpot(6, 2100),
+                                  FlSpot(7, 2400),
+                                  FlSpot(8, 1800),
+                                  FlSpot(9, 2600),
+                                ],
+                                color: Colors.blue,
+                                barWidth: 3,
+                                dotData: FlDotData(show: false),
+
+                                belowBarData: BarAreaData(
+                                  show: true,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.blue.withOpacity(0.4),
+                                      Colors.transparent,
+                                    ],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                ),
+                              ),
                             ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Graph Area",
-                            style: TextStyle(color: Colors.white54),
+
+                            lineTouchData: LineTouchData(
+                              touchTooltipData: LineTouchTooltipData(
+                                getTooltipItems: (touchedSpots) {
+                                  return touchedSpots.map((spot) {
+                                    return LineTooltipItem(
+                                      'SAR ${spot.y.toStringAsFixed(2)}',
+                                      const TextStyle(color: Colors.white),
+                                    );
+                                  }).toList();
+                                },
+                              ),
+                              getTouchedSpotIndicator:
+                                  (
+                                    LineChartBarData barData,
+                                    List<int> spotIndexes,
+                                  ) {
+                                    return spotIndexes.map((index) {
+                                      return TouchedSpotIndicatorData(
+                                        FlLine(
+                                          color: Colors.white,
+                                          strokeWidth: 1,
+                                        ),
+                                        FlDotData(show: true),
+                                      );
+                                    }).toList();
+                                  },
+                            ),
                           ),
                         ),
                       ),

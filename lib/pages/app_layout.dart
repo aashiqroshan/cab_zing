@@ -1,4 +1,5 @@
 import 'package:cab_zing/pages/dashboard.dart';
+import 'package:cab_zing/pages/filter_screen.dart';
 import 'package:cab_zing/pages/invoices_screen.dart';
 import 'package:cab_zing/pages/profile_screen.dart';
 import 'package:cab_zing/pages/sale_list_screen.dart';
@@ -25,7 +26,7 @@ class _AppLayoutState extends State<AppLayout> {
   List navBody = [
     Dashboard(),
     InvoicesScreen(),
-    SaleListScreen(),
+    FiltersScreen(),
     ProfileScreen(),
   ];
 
