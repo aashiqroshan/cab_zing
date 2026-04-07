@@ -8,7 +8,7 @@ class LocalStorage {
   }
 
   Future read(String key) async {
-    await storage.read(key: key);
+    return await storage.read(key: key);
   }
 
   Future delete(String key) async {

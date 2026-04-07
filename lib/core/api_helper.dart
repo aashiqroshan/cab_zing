@@ -1,17 +1,30 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:cab_zing/Data/local_storage.dart';
+import 'package:cab_zing/core/constants.dart';
 import 'package:http/http.dart' as http;
 
 class ApiHelper {
+  final LocalStorage storage;
+  ApiHelper(this.storage);
+
   static const String baseUrl = '';
-  static Map<String, String> headers = {"Content-Type": "application/json"};
+
+  Future<Map<String, String>> getHeaders() async {
+    final token = await storage.read(accessToken);
+
+    return {
+      "Content-Type": "application/json",
+      if (token != null) "Authorization": "Bearer $token",
+    };
+  }
 
   Future<dynamic> apiGet(String endpoint) async {
     try {
-      final response = await http.get(
-        Uri.parse('$baseUrl$endpoint'),
-        headers: headers,
-      );
+      final headers = await getHeaders();
+      final response = await http.get(Uri.parse('$endpoint'), headers: headers);
+
       return handleResponse(response);
     } catch (e) {
       print('Error occured : $e');
@@ -21,10 +34,11 @@ class ApiHelper {
 
   Future<dynamic> apiPost(String endpoint, Map<String, dynamic> body) async {
     try {
+      final headers = await getHeaders();
       final response = await http.post(
-        Uri.parse('$endpoint$endpoint'),
+        Uri.parse(endpoint),
         headers: headers,
-        body: jsonEncode(json),
+        body: jsonEncode(body),
       );
       return handleResponse(response);
     } catch (e) {

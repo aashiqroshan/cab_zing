@@ -1,8 +1,11 @@
+import 'package:cab_zing/Data/local_storage.dart';
+import 'package:cab_zing/core/constants.dart';
+import 'package:cab_zing/pages/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  ProfileScreen({super.key});
 
   static List<ListViewItems> list = [
     ListViewItems(title: 'Help', icon: Icons.help_outline),
@@ -11,6 +14,32 @@ class ProfileScreen extends StatelessWidget {
     ListViewItems(title: 'Terms of service', icon: Icons.description_outlined),
     ListViewItems(title: 'Privacy policy', icon: Icons.privacy_tip_outlined),
   ];
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final storage = LocalStorage();
+
+  String? username;
+  String? useremail;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    final name = await storage.read(userName);
+    final email = await storage.read(userEmail);
+
+    setState(() {
+      username = name;
+      useremail = email;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +82,7 @@ class ProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'David Arnold',
+                              username ?? '',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
@@ -62,7 +91,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'David012@cabzing',
+                              useremail ?? '',
                               style: TextStyle(
                                 color: isDark ? Colors.white70 : Colors.black54,
                               ),
@@ -83,7 +112,6 @@ class ProfileScreen extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  /// 📊 STATS
                   Row(
                     children: [
                       Expanded(
@@ -107,17 +135,26 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   /// 🔘 BUTTON
-                  Container(
-                    height: 50,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.black,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Logout",
-                        style: TextStyle(color: Colors.red),
+                  InkWell(
+                    onTap: () {
+                      storage.clear();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    child: Container(
+                      height: 50,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.black,
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "Logout",
+                          style: TextStyle(color: Colors.red),
+                        ),
                       ),
                     ),
                   ),
@@ -129,12 +166,15 @@ class ProfileScreen extends StatelessWidget {
 
             /// 📋 MENU LIST
             ...List.generate(
-              list.length,
+              ProfileScreen.list.length,
               (index) => ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                leading: Icon(list[index].icon, color: Colors.blue),
+                leading: Icon(
+                  ProfileScreen.list[index].icon,
+                  color: Colors.blue,
+                ),
                 title: Text(
-                  list[index].title,
+                  ProfileScreen.list[index].title,
                   style: TextStyle(color: isDark ? Colors.white : Colors.black),
                 ),
                 trailing: Icon(

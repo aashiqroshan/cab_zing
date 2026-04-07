@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:cab_zing/Data/local_storage.dart';
+import 'package:cab_zing/core/constants.dart';
+import 'package:cab_zing/pages/app_layout.dart';
 import 'package:cab_zing/pages/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +15,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final storage = LocalStorage();
   @override
   void initState() {
     super.initState();
@@ -17,13 +23,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigate() async {
+    final token = await storage.read(accessToken);
     await Future.delayed(const Duration(seconds: 3));
 
     if (!mounted) return;
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
+      MaterialPageRoute(
+        builder: (_) => token == null ? const LoginScreen() : const AppLayout(),
+      ),
     );
   }
 

@@ -1,5 +1,7 @@
 import 'package:cab_zing/pages/dashboard.dart';
+import 'package:cab_zing/pages/invoices_screen.dart';
 import 'package:cab_zing/pages/profile_screen.dart';
+import 'package:cab_zing/pages/sale_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,7 +22,12 @@ class _AppLayoutState extends State<AppLayout> {
     BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
   ];
 
-  List navBody = [Dashboard(), Dashboard(), Dashboard(), ProfileScreen()];
+  List navBody = [
+    Dashboard(),
+    InvoicesScreen(),
+    SaleListScreen(),
+    ProfileScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +39,6 @@ class _AppLayoutState extends State<AppLayout> {
       bottomNavigationBar: _customBottomNav(isDark),
     );
   }
-
-  /// 🔹 Reusable Card
 
   Widget _customBottomNav(bool isDark) {
     return Container(
@@ -54,18 +59,18 @@ class _AppLayoutState extends State<AppLayout> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                /// 🔹 SVG ICON (Replace with your SVG)
-                _navIcon(index),
+                _navIcon(index, isDark),
 
                 const SizedBox(height: 5),
 
-                /// 🔵 Active Dot
                 Container(
                   width: 6,
                   height: 6,
                   decoration: BoxDecoration(
                     color: currentIndex == index
-                        ? Colors.white
+                        ? isDark
+                              ? Colors.white
+                              : Colors.black
                         : Colors.transparent,
                     shape: BoxShape.circle,
                   ),
@@ -78,7 +83,7 @@ class _AppLayoutState extends State<AppLayout> {
     );
   }
 
-  Widget _navIcon(int index) {
+  Widget _navIcon(int index, bool isDark) {
     final icons = [
       'assets/icons/home.svg',
       'assets/icons/send.svg',
@@ -89,7 +94,11 @@ class _AppLayoutState extends State<AppLayout> {
     return SvgPicture.asset(
       icons[index],
       height: 22,
-      color: currentIndex == index ? Colors.white : Colors.grey,
+      color: currentIndex == index
+          ? isDark
+                ? Colors.white
+                : Colors.black
+          : Colors.grey,
       placeholderBuilder: (context) =>
           const Icon(Icons.error, color: Colors.red),
     );

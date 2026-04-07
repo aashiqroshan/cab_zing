@@ -11,156 +11,161 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Scaffold(backgroundColor: isDark ? Colors.black : Colors.white,body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              /// 🔝 HEADER
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.blur_on, color: Colors.blue),
-                      const SizedBox(width: 8),
-                      Text(
-                        "CabZing",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage('assets/avatar.png'),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              /// 📊 REVENUE CARD
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.grey[900] : Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      backgroundColor: isDark ? Colors.black : Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                /// 🔝 HEADER
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    /// Top Row
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "SAR 2,78,000.00",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: isDark ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const Text(
-                              "+21% than last month",
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
+                        Image.asset('assets/icon.png', height: 30, width: 30),
+                        const SizedBox(width: 8),
                         Text(
-                          "Revenue",
+                          "CabZing",
                           style: TextStyle(
-                            color: isDark ? Colors.white70 : Colors.black54,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? Colors.white : Colors.black,
                           ),
                         ),
                       ],
                     ),
-
-                    const SizedBox(height: 20),
-
-                    /// Fake Graph (UI only)
-                    Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.blue.withOpacity(0.5),
-                            Colors.transparent,
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Graph Area",
-                          style: TextStyle(color: Colors.white54),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    /// Dates
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(8, (index) {
-                        return Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: index == 1
-                                ? Colors.blue
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            "0${index + 1}",
-                            style: TextStyle(
-                              color: index == 1 ? Colors.white : Colors.grey,
-                            ),
-                          ),
-                        );
-                      }),
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('assets/avatar.png'),
                     ),
                   ],
                 ),
-              ),
 
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-              /// 📦 BOOKINGS CARD
-              _infoCard(
-                isDark,
-                title: "Bookings",
-                value: "123",
-                subtitle: "Reserved",
-                icon: Icons.pie_chart_outline,
-              ),
+                /// 📊 REVENUE CARD
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: isDark ? Colors.grey[900] : Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// Top Row
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "SAR 2,78,000.00",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: isDark ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Text(
+                                "+21% than last month",
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "Revenue",
+                            style: TextStyle(
+                              color: isDark ? Colors.white70 : Colors.black54,
+                            ),
+                          ),
+                        ],
+                      ),
 
-              const SizedBox(height: 15),
+                      const SizedBox(height: 20),
 
-              /// 💰 INVOICE CARD
-              _infoCard(
-                isDark,
-                title: "Invoices",
-                value: "10,232.00",
-                subtitle: "Rupees",
-                icon: Icons.person_outline,
-              ),
-            ],
+                      /// Fake Graph (UI only)
+                      Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.blue.withOpacity(0.5),
+                              Colors.transparent,
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Graph Area",
+                            style: TextStyle(color: Colors.white54),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      /// Dates
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(8, (index) {
+                          return Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: index == 1
+                                  ? Colors.blue
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              "0${index + 1}",
+                              style: TextStyle(
+                                color: index == 1 ? Colors.white : Colors.grey,
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                /// 📦 BOOKINGS CARD
+                _infoCard(
+                  isDark,
+                  title: "Bookings",
+                  value: "123",
+                  subtitle: "Reserved",
+                  icon: Icons.pie_chart_outline,
+                ),
+
+                const SizedBox(height: 15),
+
+                /// 💰 INVOICE CARD
+                _infoCard(
+                  isDark,
+                  title: "Invoices",
+                  value: "10,232.00",
+                  subtitle: "Rupees",
+                  icon: Icons.person_outline,
+                ),
+              ],
+            ),
           ),
         ),
-      ),);
+      ),
+    );
   }
 
   Widget _infoCard(
@@ -228,5 +233,4 @@ class _DashboardState extends State<Dashboard> {
       ),
     );
   }
-
 }
